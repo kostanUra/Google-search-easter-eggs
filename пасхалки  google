@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Пасхалки Google Поиска</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #111827;
+      --accent: #22c55e;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2933;
+      --shadow: 0 18px 45px rgba(0,0,0,0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 32px 16px 48px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    header {
+      margin-bottom: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    h1 {
+      font-size: 28px;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: conic-gradient(
+        from 180deg,
+        #4285f4 0 25%,
+        #ea4335 25% 50%,
+        #fbbc05 50% 75%,
+        #34a853 75% 100%
+      );
+      box-shadow: 0 0 12px rgba(248, 250, 252, 0.7);
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .search-input {
+      background: rgba(15,23,42,0.9);
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      padding: 8px 14px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 0 0 1px rgba(15,23,42,0.7);
+    }
+
+    .search-input input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: inherit;
+      font-size: 14px;
+      width: 180px;
+    }
+
+    .search-input span {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .btn-shake-demo {
+      border-radius: 999px;
+      border: 1px solid rgba(34,197,94,0.5);
+      background: radial-gradient(circle at top left, rgba(34,197,94,0.25), rgba(15,23,42,0.9));
+      color: #bbf7d0;
+      padding: 8px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 18px rgba(34,197,94,0.35);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+    }
+
+    .btn-shake-demo:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 24px rgba(34,197,94,0.55);
+      background: radial-gradient(circle at top left, rgba(34,197,94,0.35), rgba(15,23,42,0.95));
+    }
+
+    .btn-shake-demo:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 0 12px rgba(34,197,94,0.4);
+    }
+
+    .btn-shake-demo small {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .egg-card {
+      background: linear-gradient(145deg, rgba(15,23,42,0.96), rgba(15,23,42,0.9));
+      border-radius: 18px;
+      border: 1px solid rgba(31,41,55,0.9);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .egg-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+.egg-header {
+      padding: 12px 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .egg-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 20%, #facc15, #f97316 45%, #b91c1c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111827;
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0 0 18px rgba(248,250,252,0.7);
+    }
+
+    .egg-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .egg-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .egg-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+    }
+
+    .egg-image {
+      margin: 10px 14px 0;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(31,41,55,0.9);
+      background: radial-gradient(circle at top, #1f2937, #020617);
+      position: relative;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 12px;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .egg-image span {
+      max-width: 90%;
+    }
+
+    .egg-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(248,250,252,0.12) 0, transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(56,189,248,0.18) 0, transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .egg-body {
+      padding: 10px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .egg-query {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      background: rgba(15,23,42,0.9);
+      border-radius: 999px;
+      padding: 5px 10px;
+      border: 1px solid rgba(31,41,55,0.9);
+      color: #e5e7eb;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .egg-query-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+    }
+
+    .egg-desc {
+      font-size: 13px;
+      color: #d1d5db;
+      line-height: 1.4;
+    }
+
+    .egg-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+
+    .egg-type {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.9);
+    }
+
+    .egg-note {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      15% { transform: translate(-4px, 2px) rotate(-1deg); }
+      30% { transform: translate(4px, -2px) rotate(1deg); }
+      45% { transform: translate(-3px, 1px) rotate(-1deg); }
+      60% { transform: translate(3px, -1px) rotate(1deg); }
+      75% { transform: translate(-2px, 1px) rotate(-0.5deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
+    .shake {
+      animation: shake 0.4s ease-in-out;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 20px 10px 32px;
+      }
+      header {
+        align-items: flex-start;
+      }
+      .search-input input {
+        width: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page" id="pageRoot">
+    <header>
+      <div class="title-block">
+        <h1>
+          <span class="logo-dot"></span>
+          Пасхалки Google Поиска
+        </h1>
+        <p class="subtitle">
+          Список скрытых эффектов и мини‑игр в Google Search. Введи запрос — и страница сделает трюк:
+          наклонится, закрутится, покажет игру и многое другое.
+        </p>
+      </div>
+
+      <div class="controls">
+        <label class="search-input">
+          <span>🔍</span>
+          <input id="filterInput" type="text" placeholder="Фильтр по запросу или названию…" />
+        </label>
+        <button class="btn-shake-demo" id="shakeDemoBtn">
+          💥 67‑демо
+          <small>(потрясти страницу)</small>
+        </button>
+      </div>
+    </header>
+
+    <main id="eggsContainer">
+      <!-- Карточки генерируются JS -->
+    </main>
+  </div>
+
+  <script>
+    // Массив пасхалок. Можно дополнять новыми объектами.
+    const eggs = [
+      {
+        id: "67",
+        title: "6‑7 / 67 — тряска экрана",
+        query: "6-7 / 67 / six seven",
+        type: "Анимация страницы",
+        comment: "Экран слегка трясётся, как в меме «6‑7». В Google это отсылка к интернет‑шутке.",
+        imageHint: "Скриншот поисковой выдачи, которая будто вибрирует или дрожит.",
+        note: "Работает в Google Search, а здесь можно нажать «67‑демо», чтобы потрясти сам сайт."
+      },
+      {
+        id: "barrel-roll",
+        title: "Do a barrel roll",
+        query: "do a barrel roll",
+        type: "Поворот страницы",
+        comment: "Вся страница делает полный оборот на 360°. Отсылка к игре Star Fox 64.",
+        imageHint: "Страница Google, повернутая вверх ногами в момент вращения.",
+        note: "Можно также ввести «Z or R twice» — это команда из игры."
+      },
+      {
+        id: "askew",
+        title: "Askew / Tilt",
+        query: "askew / tilt / dutch angle",
+        type: "Наклон страницы",
+        comment: "Результаты поиска слегка наклоняются вправо — слово «askew» буквально означает «криво».",
+        imageHint: "Окно браузера, в котором выдача Google немного завалена набок.",
+        note: "Раньше работал и отдельный запрос «tilt»."
+      },
+      {
+        id: "blink-html",
+        title: "Blink HTML",
+        query: "blink html / <blink> / blink tag",
+        type: "Мигающий текст",
+        comment: "Слова «blink» и «HTML» в результатах начинают мигать, как старый тег <blink>.",
+        imageHint: "Фрагменты текста в выдаче подсвечены и мигают.",
+        note: "Ностальгия по раннему вебу, где мигающий текст был в моде."
+      },
+      {
+        id: "google-1998",
+        title: "Google в 1998",
+        query: "google in 1998",
+        type: "Ретро‑режим",
+        comment: "Страница поиска превращается в старую версию Google конца 90‑х.",
+        imageHint: "Старый логотип Google и простой дизайн без современных элементов.",
+        note: "Круто, чтобы увидеть, как выглядел поиск много лет назад."
+      },
+      {
+        id: "answer-42",
+        title: "Ответ на жизнь, Вселенную и всё остальное",
+        query: "what is the answer to life the universe and everything",
+        type: "Номер‑пасхалка",
+        comment: "Google показывает ответ «42» — отсылка к книге «Автостопом по галактике».",
+        imageHint: "Калькулятор Google с результатом 42.",
+        note: "Одна из самых известных пасхалок, связанная с фантастикой."
+      },
+      {
+        id: "zerg-rush",
+        title: "Zerg Rush",
+        query: "zerg rush",
+        type: "Мини‑игра",
+        comment: "На страницу нападают буквы «O», которые «съедают» результаты. Нужно кликать по ним, чтобы защититься.",
+        imageHint: "Много маленьких букв «O», атакующих элементы страницы.",
+        note: "Отсылка к стратегии StarCraft и тактике «zerg rush»."
+},
+      {
+        id: "atari-breakout",
+        title: "Atari Breakout",
+        query: "atari breakout (поиск по картинкам)",
+        type: "Мини‑игра",
+        comment: "Раньше поиск по картинкам превращался в игру Breakout: блоки‑картинки и шарик.",
+        imageHint: "Поле из миниатюр‑картинок, по которым прыгает шарик.",
+        note: "Сейчас официально может не работать, но есть клоны и восстановленные версии."
+      },
+      {
+        id: "pacman",
+        title: "Google Pac‑Man",
+        query: "google pacman / play pacman",
+        type: "Мини‑игра",
+        comment: "Интерактивный дудл‑лабиринт Pac‑Man прямо на странице поиска.",
+        imageHint: "Лабиринт Pac‑Man с логотипом Google в виде стен.",
+        note: "Появился как дудл к юбилею игры."
+      },
+      {
+        id: "snake",
+        title: "Snake Game",
+        query: "snake game",
+        type: "Мини‑игра",
+        comment: "Классическая «змейка» в стиле Google: собираешь еду, не врезаясь в себя.",
+        imageHint: "Поле с цветной змейкой и квадратной «едой».",
+        note: "Есть и отдельная версия в Google Maps."
+      },
+      {
+        id: "flip-coin",
+        title: "Flip a coin",
+        query: "flip a coin / heads or tails",
+        type: "Инструмент",
+        comment: "Виртуальный подбрасыватель монетки — удобно, когда нужно быстро решить спор.",
+        imageHint: "Большая монета с надписью «Heads» или «Tails».",
+        note: "Есть похожие инструменты: «roll a die», «spinner» и т.д."
+      },
+      {
+        id: "dvd-screensaver",
+        title: "DVD Screensaver",
+        query: "dvd screensaver",
+        type: "Анимация логотипа",
+        comment: "Логотип Google начинает прыгать по экрану, как старый заставочный экран DVD‑плеера.",
+        imageHint: "Логотип Google, отскакивающий от краёв окна.",
+        note: "Если переключиться на другую вкладку и вернуться, логотип сразу попадает в угол."
+      },
+      {
+        id: "thanos",
+        title: "Thanos Snap",
+        query: "thanos",
+        type: "Анимация с эффектом исчезновения",
+        comment: "Раньше можно было нажать на Перчатку Бесконечности и половина результатов «рассыпалась в пыль».",
+        imageHint: "Результаты поиска, превращающиеся в пыль, как в фильме Marvel.",
+        note: "Сейчас официально может быть отключено, но остались видео и фан‑версии."
+      },
+      {
+        id: "cha-cha-slide",
+        title: "Cha‑Cha Slide",
+        query: "cha cha slide",
+        type: "Музыкальная пасхалка",
+        comment: "Появляется микрофон, по клику страница повторяет движения из песни: сдвиги, прыжки и т.п.",
+        imageHint: "Микрофон и стрелки, показывающие направление движения.",
+        note: "Весёлая пасхалка, особенно если знаешь сам трек."
+      },
+      {
+        id: "text-adventure",
+        title: "Text Adventure Game",
+        query: "text adventure (через инструменты разработчика)",
+        type: "Скрытая игра",
+        comment: "В консоли разработчика можно было запустить текстовый квест от Google.",
+        imageHint: "Окно консоли с текстовыми описаниями комнат и команд.",
+        note: "Сейчас может работать не всегда, но это легендарная пасхалка для гиков."
+      }
+    ];
+
+    const container = document.getElementById("eggsContainer");
+    const filterInput = document.getElementById("filterInput");
+    const pageRoot = document.getElementById("pageRoot");
+    const shakeDemoBtn = document.getElementById("shakeDemoBtn");
+
+    function createEggCard(egg) {
+      const card = document.createElement("article");
+      card.className = "egg-card";
+      card.dataset.id = egg.id.toLowerCase();
+
+      const header = document.createElement("div");
+      header.className = "egg-header";
+
+      const icon = document.createElement("div");
+      icon.className = "egg-icon";
+      icon.textContent = "G";
+
+      const titleBlock = document.createElement("div");
+      titleBlock.className = "egg-title-block";
+
+      const title = document.createElement("div");
+      title.className = "egg-title";
+      title.textContent = egg.title;
+const tag = document.createElement("div");
+      tag.className = "egg-tag";
+      tag.textContent = "Google Search Easter Egg";
+
+      titleBlock.appendChild(title);
+      titleBlock.appendChild(tag);
+
+      header.appendChild(icon);
+      header.appendChild(titleBlock);
+
+      const image = document.createElement("div");
+      image.className = "egg-image";
+      const imageText = document.createElement("span");
+      imageText.textContent = egg.imageHint;
+      image.appendChild(imageText);
+
+      const body = document.createElement("div");
+      body.className = "egg-body";
+
+      const query = document.createElement("div");
+      query.className = "egg-query";
+      const qLabel = document.createElement("span");
+      qLabel.className = "egg-query-label";
+      qLabel.textContent = "Запрос:";
+      const qText = document.createElement("span");
+      qText.textContent = egg.query;
+      query.appendChild(qLabel);
+      query.appendChild(qText);
+
+      const desc = document.createElement("p");
+      desc.className = "egg-desc";
+      desc.textContent = egg.comment;
+
+      const meta = document.createElement("div");
+      meta.className = "egg-meta";
+
+      const type = document.createElement("span");
+      type.className = "egg-type";
+      type.textContent = egg.type;
+
+      const idText = document.createElement("span");
+      idText.textContent = "#" + egg.id;
+
+      meta.appendChild(type);
+      meta.appendChild(idText);
+
+      const note = document.createElement("p");
+      note.className = "egg-note";
+      note.textContent = egg.note || "";
+
+      body.appendChild(query);
+      body.appendChild(desc);
+      body.appendChild(meta);
+      if (egg.note) body.appendChild(note);
+
+      card.appendChild(header);
+      card.appendChild(image);
+      card.appendChild(body);
+
+      return card;
+    }
+
+    function renderEggs(list) {
+      container.innerHTML = "";
+      list.forEach(egg => {
+        container.appendChild(createEggCard(egg));
+      });
+    }
+
+    function filterEggs(value) {
+      const v = value.trim().toLowerCase();
+      if (!v) {
+        renderEggs(eggs);
+        return;
+      }
+      const filtered = eggs.filter(egg => {
+        return (
+          egg.title.toLowerCase().includes(v) ||
+          egg.query.toLowerCase().includes(v) ||
+          egg.comment.toLowerCase().includes(v) ||
+          (egg.note && egg.note.toLowerCase().includes(v))
+        );
+      });
+      renderEggs(filtered);
+    }
+
+    filterInput.addEventListener("input", (e) => {
+      filterEggs(e.target.value);
+    });
+
+    // Демонстрация «67» — тряска всей страницы
+    shakeDemoBtn.addEventListener("click", () => {
+      pageRoot.classList.remove("shake");
+      void pageRoot.offsetWidth; // перезапуск анимации
+      pageRoot.classList.add("shake");
+    });
+
+    // Первичный рендер
+    renderEggs(eggs);
+  </script>
+</body>
+</html>
